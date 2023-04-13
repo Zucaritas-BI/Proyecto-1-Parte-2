@@ -1,5 +1,4 @@
 from sqlalchemy import Column, ForeignKey, Integer, String,DateTime
-from sqlalchemy.orm import Relationship
 import datetime
 
 from .database import Base
@@ -7,7 +6,7 @@ from .database import Base
 class Post(Base):
     __tablename__ = "posts"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     body = Column(String, index=True)
     sentiment = Column(String, index=True)
     group_search_id = Column(Integer, ForeignKey("searchs.id"))
@@ -17,4 +16,5 @@ class Search(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     searched_at = Column(DateTime, default=datetime.datetime.utcnow)
-    posts = Relationship("Post", back_populates="search")
+    sentiment = Column(String, index=True)
+    

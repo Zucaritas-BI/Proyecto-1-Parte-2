@@ -5,7 +5,7 @@ from database.models import Post, Search
 from static.logic.load_models import load_model
 
 def create_post(db: Session, post: Post):
-    db_post = Post(body=post.body, sentiment=post.sentiment, group_search_id=post.group_search_id)
+    db_post = Post(body=post.body, group_search_id=post.group_search_id)
     db.add(db_post)
     db.commit()
     db.refresh(db_post)

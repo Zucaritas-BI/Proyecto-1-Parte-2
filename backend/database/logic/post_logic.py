@@ -2,7 +2,6 @@
 
 from sqlalchemy.orm import Session
 from database.models import Post, Search
-from static.logic.load_models import load_model
 
 def create_post(db: Session, post: Post):
     db_post = Post(body=post.body, group_search_id=post.group_search_id)
@@ -20,7 +19,9 @@ def get_post(db: Session, post_id: int):
 def get_posts_by_search(db: Session, search_id: int):
     return db.query(Post).filter(Post.group_search_id == search_id).all()
 
-def get_sentiment_by_search(db: Session, search_id: int):
-    posts = db.query(Post).filter(Post.group_search_id == search_id).all()
-    model = load_model()
-    return model.predict([post.body for post in posts])
+def update_sentiment(db: Session, post_id: int, sentiment: str):
+    db_post = db.query(Post).filter(Post.id == post_id).first()
+    db_post.sentiment = sentiment
+    db.commit()
+    db.refresh(db_post)
+    return db_post

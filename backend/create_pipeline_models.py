@@ -2,13 +2,8 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.pipeline import Pipeline
 import joblib
 from sklearn.model_selection import train_test_split
-from text_pipeline import TextProcessor
+from static.logic.text_pipeline import TextProcessor
 import pandas as pd
-import nltk
-
-def tokenize(text):
-    tokenizer = nltk.TweetTokenizer()
-    return tokenizer.tokenize(text)
 
 vectorizer = joblib.load('backend/static/logic/datos/CountVectorizer.pkl')
 

@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-
 from database.models import Post, Search
 from database.logic import group_logic, post_logic
 from pydantic import BaseModel
 from database.database import Base, session, engine
+from static.logic.pipeline_predict import predict
 
 class Post(BaseModel):
     body: str
@@ -25,6 +25,9 @@ async def root():
 @app.post("/posts/")
 async def create_post(post: Post):
     post = post_logic.create_post(db, post)
+    prediction = predict(post.body)
+    post.sentiment = prediction
+    post_logic.update_sentiment(db, post.id, prediction)
     # create post in pydantic model
     return {"id": post.id, "body": post.body, "sentiment": post.sentiment, "group_search_id": post.group_search_id}
     

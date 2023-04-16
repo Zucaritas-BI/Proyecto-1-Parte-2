@@ -1,6 +1,5 @@
 from sqlalchemy.orm import Session
 from database.models import Search
-from static.logic.load_models import load_model
 
 def create_search(db: Session):
     db_search = Search()
@@ -14,11 +13,3 @@ def get_searchs(db: Session, skip: int = 0, limit: int = 100):
 
 def get_search(db: Session, search_id: int):
     return db.query(Search).filter(Search.id == search_id).first()
-
-def get_sentiment_by_search(db: Session, search_id: int):
-    search = db.query(Search).filter(Search.id == search_id).first()
-    model = load_model()
-    prediction = model.predict([post.body for post in search.posts])
-    search.sentiment = prediction
-    db.commit()
-    return prediction

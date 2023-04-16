@@ -2,3 +2,4 @@
 *.pyc
 backend/static/logic/datos/MLPClassifier.pkl
 backend/static/logic/datos/CountVectorizer.pkl
+backend/static/logic/secret/client_secret.txt

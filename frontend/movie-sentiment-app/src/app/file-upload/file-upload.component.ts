@@ -7,13 +7,13 @@ import { FileUploadService } from './file-upload.service';
   styleUrls: ['./file-upload.component.css']
 })
 export class FileUploadComponent implements OnInit{
-  
+
   // Variable to store shortLink from api response
   shortLink: string = "";
   loading: boolean = false; // Flag variable
   file: File | null = null; // Variable to store file
 
-  // Inject service 
+  // Inject service
   constructor(private fileUploadService: FileUploadService) { }
 
   ngOnInit(): void {
@@ -28,17 +28,8 @@ export class FileUploadComponent implements OnInit{
   onUpload() {
       this.loading = !this.loading;
       console.log(this.file);
-      this.fileUploadService.upload(this.file).subscribe(
-          (event: any) => {
-              if (typeof (event) === 'object') {
-
-                  // Short link via api response
-                  this.shortLink = event.link;
-
-                  this.loading = false; // Flag variable 
-              }
-          }
-      );
+      let posts = this.fileUploadService.upload(this.file);
+      this.loading = !this.loading;
   }
 
 }

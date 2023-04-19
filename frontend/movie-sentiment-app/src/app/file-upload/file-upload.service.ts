@@ -1,29 +1,29 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError, forkJoin, fromEvent, map, retry, switchMap, throwError } from 'rxjs';
+import { Search } from '../entities/search';
+import { Post } from '../entities/post';
+import { PostService } from '../post/post.service';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class FileUploadService {
-  
+
     // API url
-    baseApiUrl = "https://file.io"
-    
-    constructor(private http:HttpClient) { }
-    
-    // Returns an observable
-    upload(file: any):Observable<any> {
-    
-        // Create form data
-        const formData = new FormData(); 
-          
-        // Store form name as "file" with file data
-        formData.append("file", file, file.name);
-          
-        // Make http post request over api
-        // with formData as req
-        return this.http.post(this.baseApiUrl, formData)
+    apiUrl = "http://localhost:8000/api";
+
+    constructor(private http: HttpClient, private postService: PostService) { }
+
+    // POST
+    upload(file: File | null): void {
+      if (!file) {
+        return;
+      }
+      //Use the service to use the function upload
+      this.postService.createNPostsFromFile(file);
     }
+
+
 
 }

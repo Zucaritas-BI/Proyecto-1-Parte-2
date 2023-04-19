@@ -47,8 +47,10 @@ constructor(private http: HttpClient) { }
             console.log(line);
             if (line.trim() !== '') {
               const post = new Post(0, line, '', search.id);
-              this.createPost(post).subscribe();
-              postss.push(post);
+              this.createPost(post).subscribe((post: Post) => {
+                postss.push(post);
+                console.log(post);
+              });
             }
           });
         };

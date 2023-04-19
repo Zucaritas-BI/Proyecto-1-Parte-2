@@ -6,6 +6,9 @@ from database.database import Base, session, engine
 from static.logic.pipeline_predict import predict
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 class Post(BaseModel):
     body: str
@@ -16,6 +19,14 @@ class Search(BaseModel):
     searched_at: str
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 Base.metadata.create_all(engine)
 db = session

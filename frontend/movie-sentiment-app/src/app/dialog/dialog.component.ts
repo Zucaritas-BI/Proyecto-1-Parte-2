@@ -7,6 +7,7 @@ import {
   ApexResponsive,
   ApexChart
 } from "ng-apexcharts";
+import { FileUploadService } from '../file-upload/file-upload.service';
 
 export type ChartOptions = {
   series: ApexNonAxisChartSeries;
@@ -22,15 +23,23 @@ export type ChartOptions = {
 export class DialogComponent {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions> | any;
+  public posts: any;
+  public possibleSentiments = ["positive", "negative"];
+  public percentagePositive: number = 0;
+  public percentageNegative: number = 0;
   
-  constructor(private dialogService: DialogService) { 
+  constructor(private dialogService: DialogService, private fileUploadService: FileUploadService) { 
+    this.posts = this.fileUploadService.posts;
+    // Calculate the percentage of positive and negative posts
+    this.percentagePositive = this.posts.filter((post: any) => post.sentiment === this.possibleSentiments[0]).length / this.posts.length * 100;
+    this.percentageNegative = this.posts.filter((post: any) => post.sentiment === this.possibleSentiments[1]).length / this.posts.length * 100;
       this.chartOptions = {
-        series: [44, 55, 13, 43, 22],
+        series: [this.percentagePositive, this.percentageNegative],
         chart: {
           width: 380,
           type: "pie"
         },
-        labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
+        labels: ["Positive", "Negative"],
         responsive: [
           {
             breakpoint: 480,

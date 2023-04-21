@@ -13,6 +13,9 @@ export class FileUploadService {
     // API url
     apiUrl = "http://localhost:8000/api";
     posts: Post[] = [];
+    possibleSentiments = ["positive", "negative"];
+    percentagePositive: number = 0;
+    percentageNegative: number = 0;
 
     constructor(private http: HttpClient, private postService: PostService, public dialog: MatDialog) { }
 

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, switchMap } from 'rxjs';
 import { Post } from '../entities/post';
 import { Search } from '../entities/search';
 
@@ -34,32 +34,33 @@ constructor(private http: HttpClient) { }
       return this.http.post<Search>(this.apiUrl + 'searchs/', {}, this.options);
   }
 
-  createNPostsFromFile(file: File): Post[] {
+  createNPostsFromFile(file: File): Observable<Post[]> {
     let postss: Post[] = [];
     // Create a search
-    this.createSearch().subscribe(
-      (search: Search) => {
+    return this.createSearch().pipe(
+      switchMap((search: Search) => {
         // Create a post for each line in the file
         const reader = new FileReader();
-        reader.onload = (e: any) => {
-          const lines = e.target.result.split('\n');
-          lines.forEach((line: string) => {
-            console.log(line);
-            if (line.trim() !== '') {
-              const post = new Post(0, line, '', search.id);
-              this.createPost(post).subscribe((post: Post) => {
-                postss.push(post);
-                console.log(post);
-              });
-            }
-          });
-        };
         reader.readAsText(file);
-      }
-
-    )
-    return postss
-  };
+        return new Observable<Post[]>(subscriber => {
+          reader.onload = (e: any) => {
+            const lines = e.target.result.split('\n');
+            const createPostObservables: Observable<Post>[] = lines
+              .filter((line: string) => line.trim() !== '')
+              .map((line: string) => new Post(0, line, '', search.id))
+              .map((post: Post) => this.createPost(post));
+            forkJoin(createPostObservables).subscribe(
+              (posts: Post[]) => {
+                subscriber.next(posts);
+                subscriber.complete();
+              },
+              (error: any) => subscriber.error(error)
+            );
+          };
+        });
+      })
+    );
+  }
 
 
 }

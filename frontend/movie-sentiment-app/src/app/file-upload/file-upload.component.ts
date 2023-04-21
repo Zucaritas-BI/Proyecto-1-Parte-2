@@ -11,11 +11,10 @@ export class FileUploadComponent implements OnInit{
 
   // Variable to store shortLink from api response
   shortLink: string = "";
-  loading: boolean = false; // Flag variable
   file: File | null = null; // Variable to store file
 
   // Inject service
-  constructor(private fileUploadService: FileUploadService, private dialogService: DialogService) { }
+  constructor(public fileUploadService: FileUploadService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
   }
@@ -25,12 +24,10 @@ export class FileUploadComponent implements OnInit{
       this.file = event.target.files[0];
   }
 
-  // OnClick of button Upload
   onUpload() {
-      this.loading = false;
-      console.log(this.file);
-      let posts = this.fileUploadService.upload(this.file);
-      this.loading = true;
+    this.fileUploadService.loading = false;
+    console.log(this.file);
+    this.fileUploadService.upload(this.file);
   }
 
   openDialog(): void {

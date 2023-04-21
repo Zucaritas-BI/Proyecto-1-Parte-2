@@ -4,3 +4,6 @@ backend/static/logic/datos/MLPClassifier.pkl
 backend/static/logic/datos/CountVectorizer.pkl
 backend/static/logic/secret/client_secret.txt
 backend/static/logic/secreto/client_secret.txt
+*.pyc
+backend/__pycache__/main.cpython-310.pyc
+backend/__pycache__/main.cpython-310.pyc

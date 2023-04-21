@@ -16,23 +16,26 @@ export class FileUploadService {
     possibleSentiments = ["positive", "negative"];
     percentagePositive: number = 0;
     percentageNegative: number = 0;
+    public loading: boolean = false; // Flag variable
 
     constructor(private http: HttpClient, private postService: PostService, public dialog: MatDialog) { }
 
-    // POST
     upload(file: File | null): void {
       if (!file) {
         return;
       }
       //Use the service to use the function upload
-      this.posts = this.postService.createNPostsFromFile(file);
-    }
-
-    openDialog(): void {
-      this.dialog.open(DialogComponent, {
-        height: '40%',
-        width: '60%'
-      });
+      this.postService.createNPostsFromFile(file).subscribe(
+        (posts: Post[]) => {
+          this.posts = posts;
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          this.loading = true;
+        }
+      );
     }
 
 

@@ -27,10 +27,10 @@ export class FileUploadComponent implements OnInit{
 
   // OnClick of button Upload
   onUpload() {
-      this.loading = !this.loading;
+      this.loading = false;
       console.log(this.file);
       let posts = this.fileUploadService.upload(this.file);
-      this.loading = !this.loading;
+      this.loading = true;
   }
 
   openDialog(): void {

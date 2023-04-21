@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploadService } from './file-upload.service';
+import { DialogService } from '../dialog/dialog.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -14,7 +15,7 @@ export class FileUploadComponent implements OnInit{
   file: File | null = null; // Variable to store file
 
   // Inject service
-  constructor(private fileUploadService: FileUploadService) { }
+  constructor(private fileUploadService: FileUploadService, private dialogService: DialogService) { }
 
   ngOnInit(): void {
   }
@@ -30,6 +31,10 @@ export class FileUploadComponent implements OnInit{
       console.log(this.file);
       let posts = this.fileUploadService.upload(this.file);
       this.loading = !this.loading;
+  }
+
+  openDialog(): void {
+    this.dialogService.openDialog();
   }
 
 }

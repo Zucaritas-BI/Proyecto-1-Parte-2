@@ -5,6 +5,9 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DialogComponent } from './dialog/dialog.component';
 import { PostComponent } from './post/post.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog'; 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,6 +18,8 @@ import { PostComponent } from './post/post.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

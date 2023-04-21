@@ -3,6 +3,7 @@ import { HttpClient} from '@angular/common/http';
 import { PostService } from '../post/post.service';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Post } from '../entities/post';
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +12,7 @@ export class FileUploadService {
 
     // API url
     apiUrl = "http://localhost:8000/api";
+    posts: Post[] = [];
 
     constructor(private http: HttpClient, private postService: PostService, public dialog: MatDialog) { }
 
@@ -20,12 +22,13 @@ export class FileUploadService {
         return;
       }
       //Use the service to use the function upload
-      this.postService.createNPostsFromFile(file);
+      this.posts = this.postService.createNPostsFromFile(file);
     }
 
     openDialog(): void {
       this.dialog.open(DialogComponent, {
-        width: '250px',
+        height: '40%',
+        width: '60%'
       });
     }
 

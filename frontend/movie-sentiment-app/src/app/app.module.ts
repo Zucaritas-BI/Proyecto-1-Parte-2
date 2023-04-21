@@ -7,6 +7,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { PostComponent } from './post/post.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog'; 
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     BrowserModule,
     HttpClientModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    NgApexchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

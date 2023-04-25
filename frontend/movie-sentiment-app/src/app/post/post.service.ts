@@ -62,5 +62,34 @@ constructor(private http: HttpClient) { }
     );
   }
 
+  createNPostsSendListToServer(file: File): Observable<Post[]> {
+    // Add all pots to list postss and send to server
+    let postss: Post[] = [];
+    // Create a search
+    return this.createSearch().pipe(
+      switchMap((search: Search) => {
+        const reader = new FileReader();
+        reader.readAsText(file);
+        return new Observable<Post[]>(subscriber => {
+          reader.onload = (e: any) => {
+            const lines = e.target.result.split('\n');
+            // Create a post for each line in the file and add to list postss
+            lines
+              .filter((line: string) => line.trim() !== '')
+              .map((line: string) => new Post(0, line, '', search.id))
+              .forEach((post: Post) => postss.push(post));
+            // Send list postss to server
+            this.http.post<Post[]>(this.apiUrl + 'predict/', postss, this.options).subscribe(
+              (posts: Post[]) => {
+                subscriber.next(posts);
+                subscriber.complete();
+              }
+            );
+          };
+        });
+      })
+    );
+  }
+
 
 }

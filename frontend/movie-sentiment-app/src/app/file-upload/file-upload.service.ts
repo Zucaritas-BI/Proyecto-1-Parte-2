@@ -25,7 +25,7 @@ export class FileUploadService {
         return;
       }
       //Use the service to use the function upload
-      this.postService.createNPostsFromFile(file).subscribe(
+      this.postService.createNPostsSendListToServer(file).subscribe(
         (posts: Post[]) => {
           this.posts = posts;
         },

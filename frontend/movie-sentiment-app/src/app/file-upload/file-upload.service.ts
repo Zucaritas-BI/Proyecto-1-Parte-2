@@ -14,9 +14,11 @@ export class FileUploadService {
     apiUrl = "http://localhost:8000/api";
     posts: Post[] = [];
     possibleSentiments = ["positive", "negative"];
-    percentagePositive: number = 0;
-    percentageNegative: number = 0;
+    public percentagePositive: number = 0;
+    public percentageNegative: number = 0;
     public loading: boolean = false; // Flag variable
+    public portionOfPosts: Post[] = [];
+    useIndex: number[] = [];
 
     constructor(private http: HttpClient, private postService: PostService, public dialog: MatDialog) { }
 
@@ -34,9 +36,25 @@ export class FileUploadService {
         },
         () => {
           this.loading = true;
+          this.first5PositivesAnd5Negatives();
         }
       );
     }
 
+    first5PositivesAnd5Negatives(): void {
+      let positiveCount = 0;
+      let negativeCount = 0;
+      let i = 0;
+      while (positiveCount < 5 && negativeCount < 5 || i < this.posts.length) {
+        if (this.posts[i].sentiment === "positive") {
+          this.portionOfPosts.push(this.posts[i]);
+          positiveCount++;
+        } else if (this.posts[i].sentiment === "negative") {
+          this.portionOfPosts.push(this.posts[i]);
+          negativeCount++;
+        }
+        i++;
+      }
+    }
 
 }

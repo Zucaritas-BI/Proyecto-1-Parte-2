@@ -8,20 +8,22 @@ import { PostComponent } from './post/post.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog'; 
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { MatTableModule } from '@angular/material/table'
 
 @NgModule({
   declarations: [
     AppComponent,
     FileUploadComponent,
     DialogComponent,
-    PostComponent
+    PostComponent,
    ],
   imports: [
     BrowserModule,
     HttpClientModule,
     MatButtonModule,
     MatDialogModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

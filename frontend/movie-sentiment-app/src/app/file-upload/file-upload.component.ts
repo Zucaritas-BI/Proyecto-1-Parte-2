@@ -12,6 +12,7 @@ export class FileUploadComponent implements OnInit{
   // Variable to store shortLink from api response
   shortLink: string = "";
   file: File | null = null; // Variable to store file
+  displayedColumns: string[] = ['body', 'sentiment'];
 
   // Inject service
   constructor(public fileUploadService: FileUploadService, private dialogService: DialogService) { }

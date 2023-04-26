@@ -19,7 +19,7 @@
   border-radius: 10px;
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
   width: 700px;
-  height: 260px;
+  height: 290px;
   background-color: #ffffff;
   padding: 10px 30px 40px;
 }
@@ -81,3 +81,34 @@
   padding: 12px 20px;
   border-radius: 4px;
 }
+
+.make-green {
+  background-color: #c7ddb5
+}
+
+.make-red {
+  background-color: #f7c6c5
+}
+
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.styled-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.styled-table td {
+  padding: 12px 15px;
+}
+

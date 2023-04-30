@@ -23,10 +23,13 @@ export type ChartOptions = {
 export class DialogComponent {
   @ViewChild("chart") chart: ChartComponent;
   public chartOptions: Partial<ChartOptions> | any;
+  public chartOptions2: Partial<ChartOptions> | any;
   public posts: any;
   public possibleSentiments = ["positive", "negative"];
   public percentagePositive: number = 0;
   public percentageNegative: number = 0;
+  public positives: number = 0;
+  public negatives: number = 0;
   public message = "";
   
   constructor(private dialogService: DialogService, private fileUploadService: FileUploadService) { 
@@ -37,6 +40,11 @@ export class DialogComponent {
     //Round the percentage to 2 decimals
     this.percentagePositive = Math.round(this.percentagePositive * 100) / 100;
     this.percentageNegative = Math.round(this.percentageNegative * 100) / 100;
+
+    // Count the number of positive and negative posts
+    this.positives = this.posts.filter((post: any) => post.sentiment === this.possibleSentiments[0]).length;
+    this.negatives = this.posts.filter((post: any) => post.sentiment === this.possibleSentiments[1]).length;
+    
     //Set the message according to the percentage of positive posts
     if (this.percentagePositive === 0) {
       this.message = "Según el análisis realizado, el " + this.percentagePositive + "% de las personas que opinaron de forma positiva sobre la película es menor a la negativa. Aunque sean bastantes comentarios negativos se sugiere hacer retrospectiva sobre estos y así obtener información importante para tener en cuenta en próximos proyectos.";
@@ -58,6 +66,29 @@ export class DialogComponent {
         chart: {
           width: 380,
           type: "pie"
+        },
+        labels: ["Positive", "Negative"],
+        responsive: [
+          {
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: "bottom"
+              }
+            }
+          }
+        ]
+      };
+      this.chartOptions2 = {
+        series: [{
+          data: [this.positives, this.negatives]
+        }],
+        chart: {
+          width: 380,
+          type: "bar"
         },
         labels: ["Positive", "Negative"],
         responsive: [

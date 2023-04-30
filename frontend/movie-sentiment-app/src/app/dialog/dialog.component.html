@@ -1,4 +1,4 @@
-<div id="chart">
+<div id="chart" class="center">
   <apx-chart
     [series]="chartOptions.series"
     [chart]="chartOptions.chart"
@@ -10,4 +10,12 @@
   <div>
     <p class="card-text">{{this.message}}</p>
   </div>
+</div>
+<div id="chart" class="center">
+  <apx-chart
+    [series]="chartOptions2.series"
+    [chart]="chartOptions2.chart"
+    [labels]="chartOptions2.labels"
+    [responsive]="chartOptions2.responsive"
+  ></apx-chart>
 </div>
